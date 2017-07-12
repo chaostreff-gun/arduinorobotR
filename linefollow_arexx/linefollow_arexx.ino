@@ -90,7 +90,7 @@ void loop() {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);  
     // Motor links an
-    digitalWrite(9, HIGH);
+    analogWrite(9, 128);
     digitalWrite(10, LOW);
   }
 
@@ -98,7 +98,7 @@ void loop() {
   if (analogRead(A7) > LIMITLR + HISTERESE && rotationR < 1000) {
     // Rechter Sensor Linie verloren
     // Motor rechts an
-    digitalWrite(5, HIGH);
+    analogWrite(5, 128);
     digitalWrite(6, LOW);  
     // Motor links aus
     digitalWrite(9, LOW);
@@ -135,16 +135,15 @@ void loop() {
     digitalWrite(10, LOW);   
   }
   */
-/* debug limits
+  // debug limits
   Serial.print("SensLinks: ");
   Serial.print(analogRead(A6));
   Serial.print(" SensRechts: ");
   Serial.println(analogRead(A7));
-*/
-/* debug rotation
+
+  // debug rotation
   Serial.print("links: ");
   Serial.print(digitalRead(3));
   Serial.print("rechts: ");
   Serial.println(digitalRead(2));
-  */
 }
