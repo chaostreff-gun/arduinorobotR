@@ -66,5 +66,7 @@ void loop() {
 			//Serial.print("Client disconnected");
 			break;
 		}
+		// Yield control over CPU for Wifi Handling
+		yield();
 	}
 }
