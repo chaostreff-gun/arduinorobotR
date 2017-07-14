@@ -4,10 +4,10 @@
 #define LIMITGL 580
 #define LIMITGR 790
 
-//motor power zwischen 128 und ?
+// motor power zwischen 128 und ?
 int mp = 128;
 
-//flags für hell und dunkel
+// flags für hell und dunkel
 int whiteflag = 0;
 int blackflag = 0;
 
@@ -62,4 +62,27 @@ void debugoutput(char text[] = "", signed int number = -1) {
 }
 
 void loop() {
+  // Abfrage der Sensoren
+  int rsensor = analogRead(A7);
+  int lsensor = analogRead(A6);
+
+  // rechter Sensor hat die Linie verloren
+  if(rsensor > LIMITLR) {
+    // Motor rechts an
+    runright();
+    // Motor links aus
+    runleft(0);
+  }
+
+  // linker Sensor hat die Linie verloren
+  if(lsensor > LIMITLL) {
+    // Motor rechts aus
+    runright(0);
+    // Motor links an
+    runleft();
+  }
+
+  // Debut Limits
+  debugoutput("rechts", rsensor);
+  debugoutput("links", lsensor);
 }
