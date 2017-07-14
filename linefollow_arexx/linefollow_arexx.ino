@@ -1,8 +1,8 @@
 // definiere Limits für hell und dunkel; Histerese für Schwankung eventuell hilfreich
 #define LIMITLL 145
 #define LIMITLR 370
-#define LIMITGL 580
-#define LIMITGR 790
+//#define LIMITGL 580
+//#define LIMITGR 790
 
 // motor power zwischen 128 und ?
 int mp = 128;
