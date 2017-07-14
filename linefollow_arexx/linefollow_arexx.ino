@@ -5,6 +5,15 @@
 #define LIMITGR 790
 #define HISTERESE 30
 
+//motor power zwischen 128 und ?
+int mp = 128;
+
+//black flag
+int blackflag = 0;
+
+//loop counter
+int counter = 0;
+
 void setup() {
   // put your setup code here, to run once:
   
@@ -28,10 +37,21 @@ void setup() {
   
   // Serial 
   Serial.begin(115200);
+  
+}
 
-  // Motor links an
-  //digitalWrite(9, HIGH);
-  //digitalWrite(10, LOW);
+// runright(0); => stop
+void runright(int ps = 128) {
+  // Motor links an; Wertebereich 128-?
+  analogWrite(5, ps);
+  analogWrite(6, 0);
+}
+
+// runleft(0); => stop
+void runleft(int ps = 128) {
+  // Motor rechts an; Wertebereich 128-?
+  analogWrite(9, ps);
+  analogWrite(10, 0);
 }
 
 int rotationL = 0;
@@ -42,7 +62,21 @@ int rL = 0;
 int rR = 0;
 
 void loop() {
-  
+
+  if (blackflag != 1) {
+    if (counter <= 5000) {
+      runright(mp);
+     // stopleft();
+    } /*else if (counter > 5000 && counter <= 10000) {
+      runleft(mp);
+      stopright();
+    } */ else {
+      counter = 0;
+    }
+  }
+  Serial.println(counter);
+  counter++;
+  /*  
   // Anschalten der LED
   digitalWrite(7, HIGH);
 
@@ -89,8 +123,7 @@ void loop() {
     // Motor rechts aus
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);  
-    // Motor links an
-    analogWrite(9, 128);
+    runleft();
     digitalWrite(10, LOW);
   }
 
@@ -104,6 +137,7 @@ void loop() {
     digitalWrite(9, LOW);
     digitalWrite(10, LOW);
   }
+  */
 /*
   if (analogRead(A6) > grenzwertLinks) {
     // Linker Sensor Linie verloren
@@ -135,7 +169,7 @@ void loop() {
     digitalWrite(10, LOW);   
   }
   */
-  // debug limits
+/*  // debug limits
   Serial.print("SensLinks: ");
   Serial.print(analogRead(A6));
   Serial.print(" SensRechts: ");
@@ -146,4 +180,6 @@ void loop() {
   Serial.print(digitalRead(3));
   Serial.print("rechts: ");
   Serial.println(digitalRead(2));
+  */
 }
+
