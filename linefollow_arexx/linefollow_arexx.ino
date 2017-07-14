@@ -7,9 +7,8 @@
 // motor power zwischen 128 und ?
 int mp = 128;
 
-// flags für hell und dunkel
-int whiteflag = 0;
-int blackflag = 0;
+// flags für Linie (schwarz) gefunden
+int lineflag = 0;
 
 int loopcounter = 0;
 
@@ -62,27 +61,46 @@ void debugoutput(char text[] = "", signed int number = -1) {
 }
 
 void loop() {
+  loopcounter++;
+
   // Abfrage der Sensoren
   int rsensor = analogRead(A7);
   int lsensor = analogRead(A6);
 
+  // beide Sensoren auf der Linie
+  if(rsensor <= LIMITLR && lsensor <= LIMITLL) {
+    lineflag = 1;
+    // Motor rechts an
+    runright(mp);
+    // Motor links an
+    runleft(mp);
+  }
+
   // rechter Sensor hat die Linie verloren
   if(rsensor > LIMITLR) {
+    lineflag = 0;
     // Motor rechts an
-    runright();
+    runright(mp);
     // Motor links aus
     runleft(0);
   }
 
   // linker Sensor hat die Linie verloren
   if(lsensor > LIMITLL) {
+    lineflag = 0;
     // Motor rechts aus
     runright(0);
     // Motor links an
-    runleft();
+    runleft(mp);
   }
 
-  // Debut Limits
+  // Debug Limits
   debugoutput("rechts", rsensor);
   debugoutput("links", lsensor);
+
+  // Debug linefag
+  debugoutput("line", lineflag); 
+
+  // loop counter
+  debugoutput("loop", loopcounter);
 }
