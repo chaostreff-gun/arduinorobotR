@@ -26,6 +26,7 @@ int loopcounter = 0;
 void setup() { 
   // LED-für LS
   pinMode(SENSORLED, OUTPUT);
+  digitalWrite(SENSORLED, HIGH);
 
   // Fototransistoren für LS
   pinMode(SENSORLEFT, INPUT);
