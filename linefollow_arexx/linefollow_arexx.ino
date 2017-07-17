@@ -4,7 +4,7 @@
 //#define LIMITGL 580
 //#define LIMITGR 790
 
-// motor power zwischen 128 und ?
+// motor power zwischen 128 und 255
 int mp = 128;
 
 // flags für Linie (schwarz) gefunden
@@ -12,9 +12,7 @@ int lineflag = 0;
 
 int loopcounter = 0;
 
-void setup() {
-  // put your setup code here, to run once:
-  
+void setup() { 
   // LED-für LS
   pinMode(7, OUTPUT);
 
@@ -41,14 +39,14 @@ void setup() {
 
 // runright(0); => stop
 void runright(int ps = 128) {
-  // Motor links an; Wertebereich 128-?
+  // Motor links an; Wertebereich 128-255
   analogWrite(5, ps);
   analogWrite(6, 0);
 }
 
 // runleft(0); => stop
 void runleft(int ps = 128) {
-  // Motor rechts an; Wertebereich 128-?
+  // Motor rechts an; Wertebereich 128-255
   analogWrite(9, ps);
   analogWrite(10, 0);
 }
