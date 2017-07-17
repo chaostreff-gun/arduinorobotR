@@ -4,6 +4,17 @@
 //#define LIMITGL 580
 //#define LIMITGR 790
 
+// Pins
+#define SENSORLEFT A6
+#define SENSORRIGHT A7
+#define SENSORLED 7
+#define ROTSENSORRIGHT 2
+#define ROTSENSORLEFT 3
+#define RIGHTMOT1 5
+#define RIGHTMOT2 6
+#define LEFTMOT1 9
+#define LEFTMOT2 10
+
 // motor power zwischen 128 und 255
 int mp = 128;
 
@@ -14,23 +25,23 @@ int loopcounter = 0;
 
 void setup() { 
   // LED-für LS
-  pinMode(7, OUTPUT);
+  pinMode(SENSORLED, OUTPUT);
 
   // Fototransistoren für LS
-  pinMode(A6, INPUT);
-  pinMode(A7, INPUT);
+  pinMode(SENSORLEFT, INPUT);
+  pinMode(SENSORRIGHT, INPUT);
 
   // Motorpins rechts
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
+  pinMode(RIGHTMOT1, OUTPUT);
+  pinMode(RIGHTMOT2, OUTPUT);
   // Motorpins links
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
+  pinMode(LEFTMOT1, OUTPUT);
+  pinMode(LEFTMOT2, OUTPUT);
 
   //rotation sensor right
-  pinMode(2, INPUT);
+  pinMode(ROTSENSORRIGHT, INPUT);
   //rotation sensor left
-  pinMode(3, INPUT);
+  pinMode(ROTSENSORLEFT, INPUT);
   
   // Serial 
   Serial.begin(115200);
@@ -40,15 +51,15 @@ void setup() {
 // runright(0); => stop
 void runright(int ps = 128) {
   // Motor links an; Wertebereich 128-255
-  analogWrite(5, ps);
-  analogWrite(6, 0);
+  analogWrite(RIGHTMOT1, ps);
+  analogWrite(RIGHTMOT2, 0);
 }
 
 // runleft(0); => stop
 void runleft(int ps = 128) {
   // Motor rechts an; Wertebereich 128-255
-  analogWrite(9, ps);
-  analogWrite(10, 0);
+  analogWrite(LEFTMOT1, ps);
+  analogWrite(LEFTMOT2, 0);
 }
 
 // Debugausgabe
@@ -62,8 +73,8 @@ void loop() {
   loopcounter++;
 
   // Abfrage der Sensoren
-  int rsensor = analogRead(A7);
-  int lsensor = analogRead(A6);
+  int rsensor = analogRead(SENSORRIGHT);
+  int lsensor = analogRead(SENSORLEFT);
 
   // beide Sensoren auf der Linie
   if(rsensor <= LIMITLR && lsensor <= LIMITLL) {
