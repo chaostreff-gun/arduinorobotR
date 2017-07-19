@@ -55,7 +55,7 @@ void runleft(int ps = 128) {
 
 // Debugausgabe
 void debugoutput(char text[] = "", signed int number = -1) {
-  strcat(text, ": ");
+//  strcat(text, ": ");
   Serial.print(text);
   Serial.println(number);
 }
@@ -95,12 +95,12 @@ void loop() {
   }
 
   // Debug Limits
-  debugoutput("rechts", rsensor);
-  debugoutput("links", lsensor);
+  debugoutput("rechts: ", rsensor);
+  debugoutput("links: ", lsensor);
 
   // Debug linefag
-  debugoutput("line", lineflag); 
+  debugoutput("line: ", lineflag); 
 
   // loop counter
-  debugoutput("loop", loopcounter);
+  debugoutput("loop: ", loopcounter);
 }
