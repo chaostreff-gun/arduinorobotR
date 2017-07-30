@@ -12,6 +12,12 @@ int lineflag = 0;
 
 int loopcounter = 0;
 
+// case variable for mode
+// 0 => calibration mode
+// 1 => search mode
+// 2 => follow line mode
+int operationmode = 0;
+
 void setup() {
   // put your setup code here, to run once:
   
@@ -62,37 +68,43 @@ void debugoutput(char text[] = "", signed int number = -1) {
 
 void loop() {
   loopcounter++;
-
+  
   // Abfrage der Sensoren
   int rsensor = analogRead(A7);
   int lsensor = analogRead(A6);
-
-  // beide Sensoren auf der Linie
-  if(rsensor <= LIMITLR && lsensor <= LIMITLL) {
-    lineflag = 1;
-    // Motor rechts an
-    runright(mp);
-    // Motor links an
-    runleft(mp);
-  }
-
-  // rechter Sensor hat die Linie verloren
-  if(rsensor > LIMITLR) {
-    lineflag = 0;
-    // Motor rechts an
-    runright(mp);
-    // Motor links aus
-    runleft(0);
-  }
-
-  // linker Sensor hat die Linie verloren
-  if(lsensor > LIMITLL) {
-    lineflag = 0;
-    // Motor rechts aus
-    runright(0);
-    // Motor links an
-    runleft(mp);
-  }
+  
+switch(operationmode) {
+  case 0: calibration(); break;
+  case 1:
+    // rechter Sensor hat die Linie verloren
+    if(rsensor > LIMITLR) {
+      lineflag = 0;
+      // Motor rechts an
+      runright(mp);
+      // Motor links aus
+      runleft(0);
+    }
+    // linker Sensor hat die Linie verloren
+    if(lsensor > LIMITLL) {
+      lineflag = 0;
+      // Motor rechts aus
+      runright(0);
+      // Motor links an
+      runleft(mp);
+    }
+    break;
+  case 2:
+    // beide Sensoren auf der Linie
+    if(rsensor <= LIMITLR && lsensor <= LIMITLL) {
+      lineflag = 1;
+      // Motor rechts an
+      runright(mp);
+      // Motor links an
+      runleft(mp);
+    } else {
+      lineflag = 0;
+    }
+    break;
 
   // Debug Limits
   debugoutput("rechts: ", rsensor);
